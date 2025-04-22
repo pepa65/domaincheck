@@ -1,7 +1,7 @@
 [![Cargo build](https://github.com/pepa65/domaincheck/actions/workflows/rust.yml/badge.svg)](https://github.com/pepa65/domaincheck/actions/workflows/rust.yml)
 [![Dependencies](https://deps.rs/repo/github/pepa65/domaincheck/status.svg)](https://deps.rs/repo/github/pepa65/domaincheck)
 [![Docs](https://img.shields.io/badge/Docs-domaincheck-blue)](https://docs.rs/crate/domaincheck/latest)
-[![License](https://img.shields.io/github/license/pepa65/domaincheck)](https://github.com/pepa65/domaincheck/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-blue)](https://github.com/pepa65/domaincheck/blob/main/LICENSE)
 [![Downloads](https://img.shields.io/crates/d/domaincheck.svg)](https://crates.io/crates/domaincheck)
 
 # domaincheck v0.4.3
