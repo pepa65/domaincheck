@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/github/license/pepa65/domaincheck)](https://github.com/pepa65/domaincheck/blob/main/LICENSE)
 [![Downloads](https://img.shields.io/crates/d/domaincheck.svg)](https://crates.io/crates/domaincheck)
 
-# domaincheck v0.4.0
+# domaincheck v0.4.3
 **Check domainname availability on CLI using RDAP (with WHOIS fallback)**
 
 A fast, robust CLI tool for checking domain availability using RDAP protocol with automatic WHOIS fallback and detailed domain information.
@@ -26,7 +26,7 @@ A fast, robust CLI tool for checking domain availability using RDAP protocol wit
 
 ## Install static single-binary
 ```
-wget https://github.com/pepa65/domaincheck/releases/download/0.4.0/domaincheck
+wget https://github.com/pepa65/domaincheck/releases/download/0.4.3/domaincheck
 sudo mv domaincheck /usr/local/bin
 sudo chown root:root /usr/local/bin/domaincheck
 sudo chmod +x /usr/local/bin/domaincheck
@@ -89,7 +89,7 @@ Check multiple domains from a file:
 
 ## Usage
 ```
-domaincheck 0.4.0
+domaincheck 0.4.3
 Check domainname availability on CLI using RDAP (with WHOIS fallback)
 Usage:
   domaincheck [OPTIONS] [DOMAIN]
