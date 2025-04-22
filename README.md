@@ -1,154 +1,149 @@
-# domain-check
+![Crates.io Version](https://img.shields.io/crates/v/domaincheck)
+![Crates.io License](https://img.shields.io/crates/l/domaincheck)
+![Crates.io Downloads](https://img.shields.io/crates/d/domaincheck)
 
-![Crates.io Version](https://img.shields.io/crates/v/domain-check)
-![Crates.io License](https://img.shields.io/crates/l/domain-check)
-![Crates.io Downloads](https://img.shields.io/crates/d/domain-check)
+# domaincheck v0.4.0
+**Check domainname availability on CLI using RDAP (with WHOIS fallback)**
 
 A fast, robust CLI tool for checking domain availability using RDAP protocol with automatic WHOIS fallback and detailed domain information.
 
-## What's New in v0.3.1
-
-The latest release brings major performance improvements:
-
-- ⚡ **5x Faster Multi-TLD Checking** - Dramatically improved speed when checking domains across multiple TLDs
-- 🔄 **Streaming Results** - Results appear as they become available rather than waiting for all checks to complete
-- 📊 **Smarter Rate Limiting** - TLD-based optimization prevents throttling while maintaining maximum speed
-- ⏱️ **Optimized Timeouts** - Quicker fallback to alternative methods when primary lookups fail
-- 💾 **Improved Resource Management** - Better memory usage for large bulk operations
-
 ## Features
+* ✅ **RDAP Protocol Support** - Uses the modern Registration Data Access Protocol
+* 🔄 **IANA Bootstrap Registry** - Dynamically discovers RDAP endpoints for any TLD
+* 🌐 **Automatic WHOIS Fallback** - Gracefully falls back to WHOIS when RDAP isn't available
+* 🔍 **Detailed Information** - Shows registrar, creation dates, expiration, and status
+* 🎯 **Multiple TLD Support** - Check domains across various TLDs in one command
+* 📋 **Bulk Domain Checking** - Process hundreds of domains from a text file
+* 🚀 **Optimized Concurrency** - Lightning-fast parallel processing with intelligent rate limiting and TLD-based optimization
+* 💻 **Interactive Terminal UI** - Navigate and explore domains in a beautiful terminal interface
+* 📋 **JSON Output** - Machine-readable output for integration with other tools
+* 🎨 **Color-coded Results** - Clear visual indicators for domain status
+* 🐛 **Debug Mode** - Detailed logging for troubleshooting
+* ⚡ **Lightweight & Fast**
+* After: https://github.com/saidutt46/domain-check
 
-- ✅ **RDAP Protocol Support** - Uses the modern Registration Data Access Protocol
-- 🔄 **IANA Bootstrap Registry** - Dynamically discovers RDAP endpoints for any TLD
-- 🌐 **Automatic WHOIS Fallback** - Gracefully falls back to WHOIS when RDAP isn't available
-- 🔍 **Detailed Information** - Shows registrar, creation dates, expiration, and status
-- 🎯 **Multiple TLD Support** - Check domains across various TLDs in one command
-- 📋 **Bulk Domain Checking** - Process hundreds of domains from a text file
-- 🚀 **Optimized Concurrency** - Lightning-fast parallel processing with intelligent rate limiting and TLD-based optimization
-- 💻 **Interactive Terminal UI** - Navigate and explore domains in a beautiful terminal interface
-- 🚀 **Optimized Concurrency** - Fast parallel processing with rate limiting and error handling
-- 📋 **JSON Output** - Machine-readable output for integration with other tools
-- 🎨 **Color-coded Results** - Clear visual indicators for domain status
-- 🐛 **Debug Mode** - Detailed logging for troubleshooting
-- ⚡ **Lightweight & Fast**
-
-## Installation
-
-### From crates.io
-
-```bash
-cargo install domain-check
+## Install static single-binary
+```
+wget https://github.com/pepa65/domaincheck/releases/download/0.4.0/domaincheck
+sudo mv domaincheck /usr/local/bin
+sudo chown root:root /usr/local/bin/domaincheck
+sudo chmod +x /usr/local/bin/domaincheck
 ```
 
-### From source
+## Install with cargo
+If not installed yet, install a **Rust toolchain**, see https://www.rust-lang.org/tools/install
 
-```bash
-git clone https://github.com/saidutt46/domain-check.git
-cd domain-check
-cargo install --path .
+### Direct from crates.io
 ```
+cargo install domaincheck
+```
+
+### Direct from repo
+```
+cargo install --git https://github.com/pepa65/domaincheck
+```
+
+### Static build (avoiding GLIBC incompatibilities)
+```
+git clone https://github.com/pepa65/domaincheck
+cd domaincheck
+rustup target add x86_64-unknown-linux-musl
+cargo rel  # Alias defined in .cargo/config.toml
+```
+The binary will be at `target/x86_64-unknown-linux-musl/release/domaincheck`
+
+## Install with cargo-binstall
+Even without a full Rust toolchain, rust binaries can be installed with the static binary `cargo-binstall`:
+
+```
+# Install cargo-binstall for Linux x86_64
+# (Other versions are available at https://crates.io/crates/cargo-binstall)
+wget github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz
+tar xf cargo-binstall-x86_64-unknown-linux-musl.tgz
+sudo chown root:root cargo-binstall
+sudo mv cargo-binstall /usr/local/bin/
+```
+
+Only a linux-x86_64 (musl) binary available: `cargo-binstall domaincheck`
+
+It will be installed in `~/.cargo/bin/` which will need to be added to `PATH`!
 
 ## Quick Start
+Check domainname availability (TLD defaults to .com):
 
-Check if a domain is available:
-
-```bash
-domain-check example
-```
+`domaincheck example`
 
 Check a domain across multiple TLDs:
 
-```bash
-domain-check example -t com org net io app
-```
+`domaincheck example -t com org net io app`
 
-Get detailed information about a domain:
+Get more detailed information about a domain:
 
-```bash
-domain-check example.com -i
-```
+`domaincheck example.com -i`
 
 Check multiple domains from a file:
 
-```bash
-domain-check --file domains.txt
-```
+`domaincheck --file domains.txt`
 
 ## Usage
-
 ```
-USAGE:
-  domain-check [OPTIONS] [DOMAIN]
+domaincheck 0.4.0
+Check domainname availability on CLI using RDAP (with WHOIS fallback)
+Usage:
+  domaincheck [OPTIONS] [DOMAIN]
+Arguments:
+  [DOMAIN]  Domainname to check (without TLD for multiple TLD checking)
 
-ARGS:
-  [DOMAIN]  Domain name to check (without TLD for multiple TLD checking)
-
-OPTIONS:
-  -t, --tld <TLD>...       Check availability with these TLDs
-  -f, --file <FILE>        Input file with domains to check (one per line)
-  -c, --concurrency <N>    Max concurrent domain checks (default: 10, max: 100)
-      --force              Override the 500 domain limit for bulk operations
-  -i, --info               Show detailed domain information when available
-  -b, --bootstrap          Use IANA bootstrap to find RDAP endpoints for unknown TLDs
-  -w, --whois              Fallback to WHOIS when RDAP is unavailable (deprecated, enabled by default)
-      --no-whois           Disable automatic WHOIS fallback
-  -u, --ui                 Launch interactive terminal UI dashboard
-  -j, --json               Output results in JSON format
-  -p, --pretty             Enable colorful, formatted output
-  -d, --debug              Show detailed debug information and error messages
-  -h, --help               Print help information
-  -V, --version            Print version information
+Options:
+  -t, --tld <TLD>...               Check availability with these TLDs (space separated)
+  -f, --file <FILE>                Input file with domains to check (one per line)
+  -j, --json                       Output results in JSON format
+  -u, --ui                         Launch interactive terminal UI dashboard
+  -c, --concurrency <CONCURRENCY>  Max concurrent domain checks (max: 100) [default: 10]
+  -n, --no-whois                   Disable automatic WHOIS fallback
+  -v, --verbose                    Be extra verbose
+  -d, --debug                      Show detailed debug information and error messages
+  -h, --help                       Print help
+  -V, --version                    Print version
 ```
 
 ## Examples
-
 ### Basic domain check
-
-```bash
-domain-check example
+```
+domaincheck example
 ```
 
 Output:
 ```
-🔴 example.com is TAKEN
+🔴 example.com TAKEN
 ```
 
 ### Check with multiple TLDs
-
-```bash
-domain-check myawesome -t com net org io
+```
+domaincheck myawesome -t com net org io
 ```
 
 Output:
 ```
-🔴 myawesome.com is TAKEN
-🟢 myawesome.net is AVAILABLE
-🟢 myawesome.org is AVAILABLE
-🔴 myawesome.io is TAKEN
+🔴 myawesome.com TAKEN
+🟢 myawesome.net AVAILABLE
+🟢 myawesome.org AVAILABLE
+🔴 myawesome.io TAKEN
 ```
 
 ### Show detailed domain information
-
-```bash
-domain-check google.com -i -p
+```
+domaincheck google.com -i -p
 ```
 
 Output:
 ```
-🔍 Checking domain availability for: google
-🔍 With TLDs: com
-ℹ️ Detailed info will be shown for taken domains
-
-🔴 google.com is TAKEN Registrar: MarkMonitor Inc. | Created: 1997-09-15T04:00:00Z | Expires: 2028-09-14T04:00:00Z | Status: serverDeleteProhibited, serverTransferProhibited, serverUpdateProhibited
+🔍 Checking: google with TLDs: com
+🔴 google.com TAKEN  1997-09-15T04:00:00Z..2028-09-14T04:00:00Z @"MarkMonitor Inc." serverDeleteProhibited, serverTransferProhibited, serverUpdateProhibited
 ```
 
 ### Bulk domain checking from file
-
-```bash
-domain-check --file domains.txt
-```
-
-Where domains.txt contains:
+File domains.txt contains:
 ```
 example.com
 mydomain
@@ -157,151 +152,120 @@ startup.io
 test-site.org
 ```
 
+```
+domaincheck --file domains.txt
+```
+
 Output:
 ```
 Checking 4 domains from file...
 Using concurrency: 10 - Please wait...
 
-🔴 example.com is TAKEN
-🟢 mydomain.com is AVAILABLE
-🔴 startup.io is TAKEN
-🟢 test-site.org is AVAILABLE
+🔴 example.com TAKEN
+🟢 mydomain.com AVAILABLE
+🔴 startup.io TAKEN
+🟢 test-site.org AVAILABLE
 
 ✅ 4 domains processed: 🟢 2 available, 🔴 2 taken, ⚠️ 0 unknown
 ```
 
 ### Bulk checking with high concurrency
-
-```bash
-domain-check --file many-domains.txt --concurrency 50
+```
+domaincheck --file many-domains.txt --concurrency 50
 ```
 
 ### Bulk checking with TLD specification
-
-```bash
-domain-check --file base-domains.txt --tld com org io
+```
+domaincheck --file base-domains.txt --tld com org io
 ```
 
 ### Interactive UI mode
-
-```bash
-domain-check startup -t com io xyz dev -u
 ```
-
-### Checking unknown TLDs with bootstrap
-
-```bash
-domain-check example.pizza -b
-```
-
-Output:
-```
-🔴 example.pizza is TAKEN
+domaincheck startup -t com io xyz dev -u
 ```
 
 ### Debug mode for troubleshooting
-
-```bash
-domain-check example.pizza -b -d
+```
+domaincheck example.pizza -d
 ```
 
 Output:
 ```
+🔍 Checking: example with TLDs: pizza
 🔍 No known RDAP endpoint for .pizza, trying bootstrap registry...
-🔍 Finding RDAP endpoint for TLD: pizza
-🔍 Found endpoint: https://rdap.donuts.co/domain/
-🔴 example.pizza is TAKEN
+🟢 example.pizza still AVAILABLE (No info available for unregistered domains)
 ```
 
 ### JSON output for integration
-
-```bash
-domain-check example -j
+```
+domaincheck example -j -i
 ```
 
-## Advanced Usage
-
-### Bulk checking with domain files
-
-Create a text file with one domain per line:
+Output:
 ```
-mydomain.com
-product-name
-startup.io
-brand-new-idea
-# Comment lines are ignored
-my-app.dev
+🔍 Checking: example with TLDs: com
+🔴 example.com already TAKEN  1995-08-14T04:00:00Z..2025-08-13T04:00:00Z @"RESERVED-Internet Assigned Numbers Authority" client delete prohibited, client transfer prohibited, client update prohibited
+
+[
+  {
+    "domain": "example.com",
+    "available": false,
+    "info": {
+      "registrar": "RESERVED-Internet Assigned Numbers Authority",
+      "creation_date": "1995-08-14T04:00:00Z",
+      "expiration_date": "2025-08-13T04:00:00Z",
+      "status": [
+        "client delete prohibited",
+        "client transfer prohibited",
+        "client update prohibited"
+      ]
+    }
+  }
+]
 ```
-
-Then check all domains in a single command:
-```bash
-domain-check --file domains.txt --concurrency 20
-```
-
-For base domains without TLDs, you can specify which TLDs to check:
-```bash
-domain-check --file base-domains.txt --tld com net org io app
-```
-
-### Checking available TLDs for a base name
-
-```bash
-domain-check mybusiness -t com net org io app dev xyz me co
-```
-
-### Checking rare TLDs with automatic fallback
-
-```bash
-domain-check rare-tld.something -b
-```
-
-The tool will automatically try RDAP first, then fall back to WHOIS if RDAP fails.
 
 ### Piping results to other tools
+```
+domaincheck mydomain -t com net org -j |jq '.[] | select(.available==true) | .domain'
+```
 
-```bash
-domain-check mydomain -t com net org -j | jq '.[] | select(.available==true) | .domain'
+```
+domaincheck example.com -ji |jq '.[] | .info.expiration_date'
 ```
 
 ## Integration
-
 The JSON output can be easily integrated with other tools:
-
-```bash
+```
 # Find all available domains and save to a file
-domain-check business -t com net org io xyz -j | jq '.[] | select(.available==true) | .domain' -r > available_domains.txt
+domaincheck business -t com net org io xyz -j |jq '.[] | select(.available==true) | .domain' -r > available_domains.txt
 ```
 
-```bash
-# Find all available domains and save to a file
-domain-check --file domains.txt -j | jq '.[] | select(.available==true) | .domain' -r > available_domains.txt
+```
+# Find all available domains in a file and save to a file
+domaincheck --file domains.txt -j | jq '.[] | select(.available==true) | .domain' -r > available_domains.txt
 ```
 
 ## How It Works
-
 1. Attempts to check domain via RDAP using known registry endpoints
 2. If TLD isn't in the known list, uses IANA bootstrap to discover the endpoint
 3. Automatically falls back to WHOIS lookup if RDAP is unavailable or unsuccessful
-4. Extracts detailed information when possible and requested
+4. Extracts detailed information when requested and possible
 5. Uses intelligent concurrency control with rate limiting to prevent overloading servers
 
 ## Performance
-
-- Concurrent processing of multiple domains (up to 5 at once by default)
-- Rate limiting to prevent overloading RDAP endpoints
-- Automatic timeout handling to prevent hanging requests
-- Tiny binary size for fast startup and low resource usage
+* Concurrent processing of multiple domains (up to 5 at once by default)
+* Rate limiting to prevent overloading RDAP endpoints
+* Automatic timeout handling to prevent hanging requests
+* Small binary size for fast startup and low resource usage
 
 ## Supported TLDs
-
-domain-check includes built-in support for many popular TLDs including:
+`domaincheck` includes built-in support for many popular TLDs including:
 
 `com`, `net`, `org`, `io`, `app`, `dev`, `ai`, `co`, `xyz`, `me`, `info`, `biz`, `us`, `uk`, `eu`, `tech`, `blog`, `page`, `zone`, `shop`, `de`, `ca`, `au`, `fr`, `es`, `it`, `nl`, `jp`, `tv`, `cc`, and others.
 
 Additional TLDs can be checked using the bootstrap (`-b`) option.
 
 ## Comparison with other tools
-
 | Feature | domain-check | whois-cli | dns-lookup |
 |---------|--------------|-----------|------------|
 | RDAP Protocol | ✅ | ❌ | ❌ |
@@ -317,26 +281,21 @@ Additional TLDs can be checked using the bootstrap (`-b`) option.
 | Speed | Fast ⚡ | Medium | Medium |
 
 ## Contributing
-
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Fork the repository.
+2. Create your feature branch (`git checkout -b feature/amazing-feature`).
+3. Commit your changes (`git commit -m 'Add some amazing feature'`).
+4. Push to the branch (`git push origin feature/amazing-feature`).
+5. Open a Pull Request.
 
 ## License
-
 This project is licensed under either of:
-
-- Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
-- MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+* Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+* MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
 at your option.
 
 ## Acknowledgments
-
-- [IANA](https://www.iana.org/) for providing the RDAP bootstrap registry
-- [Rustsec](https://rustsec.org/) for inspiration on the dual MIT/Apache licensing approach
-- Various registry operators for providing public RDAP endpoints
+* [IANA](https://www.iana.org/) for providing the RDAP bootstrap registry.
+* [Rustsec](https://rustsec.org/) for inspiration on the dual MIT/Apache licensing approach.
+* Various registry operators for providing public RDAP endpoints.
