@@ -1,6 +1,8 @@
-![Crates.io Version](https://img.shields.io/crates/v/domaincheck)
-![Crates.io License](https://img.shields.io/crates/l/domaincheck)
-![Crates.io Downloads](https://img.shields.io/crates/d/domaincheck)
+[![Cargo build](https://github.com/pepa65/domaincheck/actions/workflows/rust.yml/badge.svg)](https://github.com/pepa65/domaincheck/actions/workflows/rust.yml)
+[![Dependencies](https://deps.rs/repo/github/pepa65/domaincheck/status.svg)](https://deps.rs/repo/github/pepa65/domaincheck)
+[![Docs](https://img.shields.io/badge/Docs-domaincheck-blue)](https://docs.rs/crate/domaincheck/latest)
+[![License](https://img.shields.io/github/license/pepa65/domaincheck)](https://github.com/pepa65/domaincheck/blob/main/LICENSE)
+[![Downloads](https://img.shields.io/crates/d/domaincheck.svg)](https://crates.io/crates/domaincheck)
 
 # domaincheck v0.4.0
 **Check domainname availability on CLI using RDAP (with WHOIS fallback)**
@@ -146,7 +148,7 @@ Output:
 File domains.txt contains:
 ```
 example.com
-mydomain
+xyz123domain
 startup.io
 # This is a comment
 test-site.org
@@ -158,15 +160,15 @@ domaincheck --file domains.txt
 
 Output:
 ```
-Checking 4 domains from file...
-Using concurrency: 10 - Please wait...
+Starting bulk domain check with concurrency: 10
+Results will stream as they complete:
 
-🔴 example.com TAKEN
-🟢 mydomain.com AVAILABLE
-🔴 startup.io TAKEN
-🟢 test-site.org AVAILABLE
+🟢 xyz123domain.com AVAILABLE (No info available for unregistered domains)
+🔴 example.com TAKEN  1995-08-14T04:00:00Z..2025-08-13T04:00:00Z @"RESERVED-Internet Assigned Numbers Authority" client delete prohibited, client transfer prohibited, client update prohibited
+🔴 test-site.org TAKEN (No info available)
+🔴 startup.io TAKEN (No info available)
 
-✅ 4 domains processed: 🟢 2 available, 🔴 2 taken, ⚠️ 0 unknown
+✅ 4 domains processed: 🟢 1 available, 🔴 3 taken, ⚠️ 0 unknown
 ```
 
 ### Bulk checking with high concurrency
@@ -198,14 +200,11 @@ Output:
 
 ### JSON output for integration
 ```
-domaincheck example -j -i
+domaincheck example -j
 ```
 
 Output:
 ```
-🔍 Checking: example with TLDs: com
-🔴 example.com already TAKEN  1995-08-14T04:00:00Z..2025-08-13T04:00:00Z @"RESERVED-Internet Assigned Numbers Authority" client delete prohibited, client transfer prohibited, client update prohibited
-
 [
   {
     "domain": "example.com",
@@ -298,4 +297,4 @@ at your option.
 ## Acknowledgments
 * [IANA](https://www.iana.org/) for providing the RDAP bootstrap registry.
 * [Rustsec](https://rustsec.org/) for inspiration on the dual MIT/Apache licensing approach.
-* Various registry operators for providing public RDAP endpoints.
+* The various registry operators for providing public RDAP endpoints.
