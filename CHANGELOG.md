@@ -1,4 +1,19 @@
 # Changelog
+## [0.4.4] - 2025-05-22
+* Update dependencies
+
+## [0.4.3] - 2025-04-23
+
+### Changes
+* Change name to domaincheck
+* Tweak output
+* Remove deprecated whois option
+* Default to use bootstrap when needed
+* Always show more detailed info when available
+* ALways show pretty output
+* Add verbose option (largely the same as debug)
+* Add a few bootstrap options
+* Remove domain limit for bulk checking
 
 ## [0.3.1] - 2025-04-18
 
