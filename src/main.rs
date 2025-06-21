@@ -421,7 +421,7 @@ fn display_interactive_dashboard(domains: &[DomainStatus]) -> Result<(), Box<dyn
 		execute,
 		terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 	};
-	use tui::{
+	use ratatui::{
 		Terminal,
 		backend::CrosstermBackend,
 		layout::{Constraint, Direction, Layout},
@@ -448,7 +448,7 @@ fn display_interactive_dashboard(domains: &[DomainStatus]) -> Result<(), Box<dyn
 			break;
 		}
 		terminal.draw(|f| {
-			let size = f.size();
+			let size = f.area();
 			// Create layout
 			let chunks = Layout::default()
 				.direction(Direction::Vertical)
@@ -500,7 +500,7 @@ fn display_interactive_dashboard(domains: &[DomainStatus]) -> Result<(), Box<dyn
 				];
 				Row::new(cells).style(style).height(1)
 			});
-			let domain_table = Table::new(rows).header(header).block(Block::default().title("Domain Status").borders(Borders::ALL)).widths(&[
+			let domain_table = Table::new(rows, [1]).header(header).block(Block::default().title("Domain Status").borders(Borders::ALL)).widths([
 				Constraint::Percentage(30),
 				Constraint::Percentage(15),
 				Constraint::Percentage(20),
