@@ -1,6 +1,6 @@
 [package]
 name = "domaincheck"
-version = "0.4.12"
+version = "0.4.13"
 edition = "2024"
 authors = ["Sai Dutt G.V <gvs46@protonmail.com>", "github.com/pepa65"]
 description = "Check domainname availability on CLI using RDAP (with WHOIS fallback)"
@@ -27,7 +27,7 @@ openssl-sys = { version = "0.9.104", features = ["vendored"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 futures = "0.3"
-console = "0.15"
+console = "0.16"
 crossterm = "0.29.0"
 lazy_static = "1.4.0"
 ctrlc = "3.4"
