@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue)](https://github.com/pepa65/domaincheck/blob/main/LICENSE)
 [![Downloads](https://img.shields.io/crates/d/domaincheck.svg)](https://crates.io/crates/domaincheck)
 
-# domaincheck v0.4.24
+# domaincheck v0.4.25
 **Check domainname availability on CLI using RDAP (with WHOIS fallback)**
 
 A fast, robust CLI tool for checking domain availability using RDAP protocol with automatic WHOIS fallback and detailed domain information.
@@ -89,7 +89,7 @@ Check multiple domains from a file:
 
 ## Usage
 ```
-domaincheck 0.4.24
+domaincheck 0.4.25
 Check domainname availability on CLI using RDAP (with WHOIS fallback)
 Usage:
   domaincheck [OPTIONS] [DOMAIN]
