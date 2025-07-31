@@ -1,10 +1,11 @@
-[![Cargo build](https://github.com/pepa65/domaincheck/actions/workflows/rust.yml/badge.svg)](https://github.com/pepa65/domaincheck/actions/workflows/rust.yml)
-[![Dependencies](https://deps.rs/repo/github/pepa65/domaincheck/status.svg)](https://deps.rs/repo/github/pepa65/domaincheck)
-[![Docs](https://img.shields.io/badge/Docs-domaincheck-blue)](https://docs.rs/crate/domaincheck/latest)
-[![License](https://img.shields.io/badge/License-MIT-blue)](https://github.com/pepa65/domaincheck/blob/main/LICENSE)
-[![Downloads](https://img.shields.io/crates/d/domaincheck.svg)](https://crates.io/crates/domaincheck)
+[![version](https://img.shields.io/crates/v/domaincheck.svg)](https://crates.io/crates/domaincheck)
+[![build](https://github.com/pepa65/domaincheck/actions/workflows/rust.yml/badge.svg)](https://github.com/pepa65/domaincheck/actions/workflows/rust.yml)
+[![dependencies](https://deps.rs/repo/github/pepa65/domaincheck/status.svg)](https://deps.rs/repo/github/pepa65/domaincheck)
+[![docs](https://img.shields.io/badge/docs-domaincheck-blue.svg)](https://docs.rs/crate/domaincheck/latest)
+[![license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/pepa65/domaincheck/blob/main/LICENSE)
+[![downloads](https://img.shields.io/crates/d/domaincheck.svg)](https://crates.io/crates/domaincheck)
 
-# domaincheck v0.4.25
+# domaincheck v0.4.26
 **Check domainname availability on CLI using RDAP (with WHOIS fallback)**
 
 A fast, robust CLI tool for checking domain availability using RDAP protocol with automatic WHOIS fallback and detailed domain information.
@@ -89,7 +90,7 @@ Check multiple domains from a file:
 
 ## Usage
 ```
-domaincheck 0.4.25
+domaincheck 0.4.26
 Check domainname availability on CLI using RDAP (with WHOIS fallback)
 Usage:
   domaincheck [OPTIONS] [DOMAIN]
