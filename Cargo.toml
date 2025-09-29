@@ -1,15 +1,15 @@
 [package]
 name = "domaincheck"
-version = "0.4.58"
+version = "0.4.59"
 edition = "2024"
 authors = ["Sai Dutt G.V <gvs46@protonmail.com>", "github.com/pepa65"]
 description = "Check domainname availability on CLI using RDAP (with WHOIS fallback)"
-license = "MIT"
 repository = "https://github.com/pepa65/domaincheck"
-keywords = ["cli", "domain", "whois", "rdap", "availability"]
-categories = ["command-line-utilities", "network-programming"]
 documentation = "https://docs.rs/domaincheck"
 readme = "README.md"
+license = "MIT"
+keywords = ["cli", "domain", "whois", "rdap", "availability"]
+categories = ["command-line-utilities", "network-programming"]
 
 [package.metadata.binstall]
 pkg-url = "{repo}/releases/download/{version}/{name}"
