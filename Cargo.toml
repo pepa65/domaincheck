@@ -1,6 +1,6 @@
 [package]
 name = "domaincheck"
-version = "0.4.59"
+version = "0.4.60"
 edition = "2024"
 authors = ["Sai Dutt G.V <gvs46@protonmail.com>", "github.com/pepa65"]
 description = "Check domainname availability on CLI using RDAP (with WHOIS fallback)"
