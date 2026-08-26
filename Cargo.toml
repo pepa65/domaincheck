@@ -1,6 +1,6 @@
 [package]
 name = "domaincheck"
-version = "0.4.141"
+version = "0.5.0"
 edition = "2024"
 authors = ["Sai Dutt G.V <gvs46@protonmail.com>", "github.com/pepa65"]
 description = "Check domainname availability on CLI using RDAP (with WHOIS fallback)"
@@ -19,19 +19,19 @@ target-family = "Linux"
 target-arch = "X86_64"
 
 [dependencies]
-clap = { version = "4.5", features = ["derive"] }
-regex = "1.10"
-tokio = { version = "1.44.2", features = ["full"] }
-reqwest = { version = "0.12.15", features = ["json", "rustls-tls"] }
-openssl-sys = { version = "0.9.104", features = ["vendored"] }
+clap = { version = "4.6", features = ["derive"] }
+regex = "1"
+tokio = { version = "1.53", features = ["full"] }
+reqwest = { version = "0.13", features = ["json", "rustls"] }
+openssl-sys = { version = "0.9", features = ["vendored"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 futures = "0.3"
 console = "0.16"
 crossterm = "0.29.0"
-lazy_static = "1.4.0"
+lazy_static = "1"
 ctrlc = "3.4"
-ratatui = "0.29.0"
+ratatui = "0.30"
 
 [profile.release]
 opt-level = "z"
