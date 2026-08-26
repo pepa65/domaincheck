@@ -20,7 +20,7 @@ target-arch = "X86_64"
 
 [dependencies]
 clap = { version = "4.6", features = ["derive"] }
-regex = "1"
+regex = "1.13"
 tokio = { version = "1.53", features = ["full"] }
 reqwest = { version = "0.13", features = ["json", "rustls"] }
 openssl-sys = { version = "0.9", features = ["vendored"] }
