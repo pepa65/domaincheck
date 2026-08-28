@@ -5,7 +5,7 @@
 [![license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/pepa65/domaincheck/blob/main/LICENSE)
 [![downloads](https://img.shields.io/crates/d/domaincheck.svg)](https://crates.io/crates/domaincheck)
 
-# domaincheck v0.5.2
+# domaincheck v0.5.3
 **Check domainname availability on CLI using RDAP (with WHOIS fallback)**
 
 A fast, robust CLI tool for checking domain availability using RDAP protocol with automatic WHOIS fallback and detailed domain information.
@@ -92,7 +92,7 @@ Check multiple domains from a file:
 
 ## Usage
 ```
-domaincheck 0.5.2
+domaincheck 0.5.3
 Check domainname availability on CLI using RDAP (with WHOIS fallback)
 Usage:
   domaincheck [OPTIONS] [DOMAIN]
@@ -167,7 +167,7 @@ Starting bulk domain check with concurrency: 10
 Results will stream as they complete:
 
 🟢 xyz123domain.com AVAILABLE (No info available for unregistered domains)
-🔴 example.com TAKEN  1995-08-14T04:00:00Z..20.5.28-13T04:00:00Z @"RESERVED-Internet Assigned Numbers Authority" client delete prohibited, client transfer prohibited, client update prohibited
+🔴 example.com TAKEN  1995-08-14T04:00:00Z..20.5.38-13T04:00:00Z @"RESERVED-Internet Assigned Numbers Authority" client delete prohibited, client transfer prohibited, client update prohibited
 🔴 test-site.org TAKEN (No info available)
 🔴 startup.io TAKEN (No info available)
 
@@ -215,7 +215,7 @@ Output:
     "info": {
       "registrar": "RESERVED-Internet Assigned Numbers Authority",
       "creation_date": "1995-08-14T04:00:00Z",
-      "expiration_date": "20.5.28-13T04:00:00Z",
+      "expiration_date": "20.5.38-13T04:00:00Z",
       "status": [
         "client delete prohibited",
         "client transfer prohibited",
