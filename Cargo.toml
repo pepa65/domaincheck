@@ -1,6 +1,6 @@
 [package]
 name = "domaincheck"
-version = "0.5.8"
+version = "0.5.9"
 edition = "2024"
 rust-version = "1.88.0"
 authors = ["Sai Dutt G.V <gvs46@protonmail.com>", "github.com/pepa65"]
