@@ -2,6 +2,7 @@
 name = "domaincheck"
 version = "0.5.8"
 edition = "2024"
+rust_version = "1.88.0"
 authors = ["Sai Dutt G.V <gvs46@protonmail.com>", "github.com/pepa65"]
 description = "Check domainname availability on CLI using RDAP (with WHOIS fallback)"
 repository = "https://github.com/pepa65/domaincheck"
