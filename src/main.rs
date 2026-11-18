@@ -202,10 +202,10 @@ async fn find_endpoint_for_tld(tld: &str) -> Result<String, Box<dyn std::error::
 	// Check cache first
 	{
 		let cache = BOOTSTRAP_CACHE.lock().unwrap();
-		if !cache.is_stale() {
-			if let Some(endpoint) = cache.get(tld) {
-				return Ok(endpoint);
-			}
+		if !cache.is_stale()
+			&& let Some(endpoint) = cache.get(tld)
+		{
+			return Ok(endpoint);
 		}
 	}
 
@@ -217,25 +217,21 @@ async fn find_endpoint_for_tld(tld: &str) -> Result<String, Box<dyn std::error::
 		let json: serde_json::Value = response.json().await?;
 		if let Some(services) = json.get("services").and_then(|s| s.as_array()) {
 			for service in services {
-				if let Some(service_array) = service.as_array() {
-					if service_array.len() >= 2 {
-						if let Some(tlds) = service_array[0].as_array() {
-							for t in tlds {
-								if let Some(t_str) = t.as_str() {
-									if t_str.to_lowercase() == tld.to_lowercase() {
-										if let Some(urls) = service_array[1].as_array() {
-											if let Some(url) = urls.first().and_then(|u| u.as_str()) {
-												let endpoint = format!("{}/domain/", url.trim_end_matches('/'));
-												// Update cache
-												let mut cache = BOOTSTRAP_CACHE.lock().unwrap();
-												cache.insert(tld.to_string(), endpoint.clone());
-
-												return Ok(endpoint);
-											}
-										}
-									}
-								}
-							}
+				if let Some(service_array) = service.as_array()
+					&& service_array.len() >= 2
+					&& let Some(tlds) = service_array[0].as_array()
+				{
+					for t in tlds {
+						if let Some(t_str) = t.as_str()
+							&& t_str.to_lowercase() == tld.to_lowercase()
+							&& let Some(urls) = service_array[1].as_array()
+							&& let Some(url) = urls.first().and_then(|u| u.as_str())
+						{
+							let endpoint = format!("{}/domain/", url.trim_end_matches('/'));
+							// Update cache
+							let mut cache = BOOTSTRAP_CACHE.lock().unwrap();
+							cache.insert(tld.to_string(), endpoint.clone());
+							return Ok(endpoint);
 						}
 					}
 				}
@@ -336,14 +332,12 @@ fn extract_domain_info(json: &serde_json::Value) -> Option<DomainInfo> {
 					if let Some(name) =
 						entity.get("vcardArray").and_then(|v| v.as_array()).and_then(|a| a.get(1)).and_then(|a| a.as_array()).and_then(|items| {
 							for item in items {
-								if let Some(item_array) = item.as_array() {
-									if item_array.len() >= 4 {
-										if let Some(first) = item_array.first().and_then(|f| f.as_str()) {
-											if first == "fn" {
-												return item_array.get(3).and_then(|n| n.as_str()).map(String::from);
-											}
-										}
-									}
+								if let Some(item_array) = item.as_array()
+									&& item_array.len() >= 4
+									&& let Some(first) = item_array.first().and_then(|f| f.as_str())
+									&& first == "fn"
+								{
+									return item_array.get(3).and_then(|n| n.as_str()).map(String::from);
 								}
 							}
 							None
@@ -514,32 +508,32 @@ fn display_interactive_dashboard(domains: &[DomainStatus]) -> Result<(), Box<dyn
 			f.render_widget(help, chunks[2]);
 		})?;
 		// Handle input with timeout to allow for SIGINT checks
-		if event::poll(Duration::from_millis(100))? {
-			if let Event::Key(key) = event::read()? {
-				match key.code {
-					KeyCode::Char('q') => break,
-					// Handle Ctrl+C
-					KeyCode::Char('c') if key.modifiers.contains(KeyModifiers::CONTROL) => break,
-					KeyCode::Up => {
-						selected_index = selected_index.saturating_sub(1);
-					}
-					KeyCode::Down => {
-						if selected_index < domains.len() - 1 {
-							selected_index += 1;
-						}
-					}
-					KeyCode::Enter => {
-						// View details functionality can be implemented here
-					}
-					KeyCode::Char('s') => {
-						if selected_index < domains.len() {
-							if let Some(false) = domains[selected_index].available {
-								// Suggestion functionality can be implemented here
-							}
-						}
-					}
-					_ => {}
+		if event::poll(Duration::from_millis(100))?
+			&& let Event::Key(key) = event::read()?
+		{
+			match key.code {
+				KeyCode::Char('q') => break,
+				// Handle Ctrl+C
+				KeyCode::Char('c') if key.modifiers.contains(KeyModifiers::CONTROL) => break,
+				KeyCode::Up => {
+					selected_index = selected_index.saturating_sub(1);
 				}
+				KeyCode::Down => {
+					if selected_index < domains.len() - 1 {
+						selected_index += 1;
+					}
+				}
+				KeyCode::Enter => {
+					// View details functionality can be implemented here
+				}
+				KeyCode::Char('s') => {
+					if selected_index < domains.len()
+						&& let Some(false) = domains[selected_index].available
+					{
+						// Suggestion functionality can be implemented here
+					}
+				}
+				_ => {}
 			}
 		}
 	}
